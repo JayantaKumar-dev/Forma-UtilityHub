@@ -1,13 +1,15 @@
-# ---- Build Stage ----
-FROM gradle:8.10.0-jdk21 AS build
-WORKDIR /home/gradle/src
-COPY --chown=gradle:gradle . .
-RUN gradle clean build -x test --no-daemon
-
-# ---- Run Stage ----
+# Use lightweight OpenJDK image
 FROM openjdk:21-jdk-slim
+
+# Set working directory
 WORKDIR /app
-COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
+
+# Copy the already-built JAR into the container
+COPY build/libs/UtilityHub-0.0.1-SNAPSHOT.jar app.jar
+
+# Render will inject PORT automatically
 ENV PORT=8080
 EXPOSE 8080
+
+# Run the Spring Boot application
 CMD ["java", "-jar", "app.jar"]
