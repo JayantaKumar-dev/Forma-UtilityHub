@@ -5,7 +5,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Copy the already-built JAR into the container
-COPY build/libs/UtilityHub-0.0.1-SNAPSHOT.jar app.jar
+COPY backend/build/libs/UtilityHub-0.0.1-SNAPSHOT.jar app.jar
 
 # Render will inject PORT automatically
 ENV PORT=8080
