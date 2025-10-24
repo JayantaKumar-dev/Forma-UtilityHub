@@ -1,0 +1,18 @@
+.gradle
+build
+out
+bin
+dist
+node_modules
+
+# IDE files
+.git
+.gitignore
+.idea
+.vscode
+*.iml
+*.iws
+*.ipr
+
+# Logs
+*.log

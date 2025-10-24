@@ -32,4 +32,10 @@ public class UrlService {
     private String generateCode() {
         return Integer.toHexString(random.nextInt(999999));
     }
+
+    public void incrementClicks(Url url) {
+        url.setClicks(url.getClicks() + 1);
+        repo.save(url);
+    }
+
 }

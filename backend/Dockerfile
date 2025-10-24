@@ -1,17 +1,19 @@
-# Use OpenJDK 21 slim as base image
-FROM openjdk:21-jdk-slim
+# Stage 1: Build the application
+FROM gradle:8.7-jdk21 AS builder
+WORKDIR /app
+COPY . .
+RUN gradle clean build -x test
 
-# Set working directory
+# Stage 2: Run the application
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Copy JAR file from build/libs
-COPY build/libs/UtilityHub-0.0.1-SNAPSHOT.jar app.jar
+# Copy jar from build stage
+COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Render sets PORT env variable automatically (default 10000)
-ENV PORT=10000
+# Render provides PORT env — use it
+ENV PORT=8080
+EXPOSE 8080
 
-# Expose the same port
-EXPOSE 10000
-
-# Run Spring Boot app binding to Render's port
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}", "--server.address=0.0.0.0"]
+# Make sure Spring Boot binds to correct port
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}"]
