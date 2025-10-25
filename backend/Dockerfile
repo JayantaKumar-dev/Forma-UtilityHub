@@ -16,4 +16,5 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Make sure Spring Boot binds to correct port
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}"]
+# ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}"]
+ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=$PORT"]

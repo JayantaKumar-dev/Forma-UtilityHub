@@ -20,11 +20,6 @@ public class UrlController {
         this.service = service;
     }
 
-    @GetMapping("/health")
-    public String health() {
-        return "OK";
-    }
-
     @PostMapping("/shorten")
     public ResponseEntity<Url> shorten(@RequestBody Map<String, String> request) {
         String originalUrl = request.get("originalUrl");
