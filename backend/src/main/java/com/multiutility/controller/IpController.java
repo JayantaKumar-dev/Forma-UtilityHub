@@ -1,5 +1,6 @@
 package com.multiutility.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -12,20 +13,25 @@ public class IpController {
 
     @GetMapping
     public ResponseEntity<String> getIpInfo(@RequestParam(required = false) String ip) {
+        if (ip == null || ip.trim().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"Missing required query param: ip\"}");
+        }
+
+        String url = "https://ipapi.co/" + ip + "/json/";
+
         try {
-            // ✅ When IP provided by user → Query exact IP
-            if (ip != null && !ip.isEmpty()) {
-                return ResponseEntity.ok(restTemplate.getForObject(
-                        "https://ipapi.co/" + ip + "/json/", String.class));
+            String response = restTemplate.getForObject(url, String.class);
+            if (response == null || response.contains("\"error\"")) {
+                // fallback to ipinfo (optional) — keep simple response
+                String fallbackUrl = "https://ipinfo.io/" + ip + "/json?token=YOUR_IPINFO_TOKEN";
+                String fallbackResp = restTemplate.getForObject(fallbackUrl, String.class);
+                return ResponseEntity.ok(fallbackResp != null ? fallbackResp : "{\"error\":\"Not found\"}");
             }
-
-            // ✅ When NO IP provided → Use fallback API that detects real visitor IP
-            return ResponseEntity.ok(restTemplate.getForObject(
-                    "https://ipinfo.io/json?token=e96f7558f7edc2", String.class));
-
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500)
-                    .body("{\"error\": \"IP lookup failed\"}");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"IP lookup failed\"}");
         }
     }
 }
