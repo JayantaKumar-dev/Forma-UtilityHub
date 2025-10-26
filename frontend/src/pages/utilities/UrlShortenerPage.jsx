@@ -59,6 +59,8 @@ export default function UrlShortenerPage() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
 
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleShorten = async () => {
     if (!url.trim()) {
       setError("Please enter a valid URL!");
@@ -70,7 +72,7 @@ export default function UrlShortenerPage() {
     setCopied(false);
 
     try {
-      const res = await fetch(`http://localhost:8080/api/v1/url/shorten?originalUrl=${encodeURIComponent(url)}`, {
+      const res = await fetch(`${BASE_URL}/api/v1/url/shorten?originalUrl=${encodeURIComponent(url)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ originalUrl: url }),
@@ -79,7 +81,7 @@ export default function UrlShortenerPage() {
       if (!res.ok) throw new Error("Failed to shorten URL");
       const data = await res.json();
 
-      setShortUrl(`http://localhost:8080/api/v1/url/${data.shortCode}`);
+      setShortUrl(`${BASE_URL}/api/v1/url/${data.shortCode}`);
     } catch (err) {
       console.error("Error:", err);
       setError("Something went wrong! Try again.");
