@@ -12,31 +12,20 @@ public class IpController {
 
     @GetMapping
     public ResponseEntity<String> getIpInfo(@RequestParam(required = false) String ip) {
-        String url = (ip == null || ip.isEmpty())
-                ? "https://ipapi.co/json/"
-                : "https://ipapi.co/" + ip + "/json/";
-
         try {
-            String response = restTemplate.getForObject(url, String.class);
-            if (response == null || response.contains("\"error\"")) {
-                return fallbackAPI(ip);
+            // ✅ When IP provided by user → Query exact IP
+            if (ip != null && !ip.isEmpty()) {
+                return ResponseEntity.ok(restTemplate.getForObject(
+                        "https://ipapi.co/" + ip + "/json/", String.class));
             }
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return fallbackAPI(ip);
-        }
-    }
 
-    private ResponseEntity<String> fallbackAPI(String ip) {
-        String fallbackUrl = (ip == null || ip.isEmpty())
-                ? "https://ipinfo.io/json?token=e96f7558f7edc2"
-                : "https://ipinfo.io/" + ip + "/json?token=e96f7558f7edc2";
+            // ✅ When NO IP provided → Use fallback API that detects real visitor IP
+            return ResponseEntity.ok(restTemplate.getForObject(
+                    "https://ipinfo.io/json?token=e96f7558f7edc2", String.class));
 
-        try {
-            String response = restTemplate.getForObject(fallbackUrl, String.class);
-            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("{\"error\":\"IP lookup failed\"}");
+            return ResponseEntity.status(500)
+                    .body("{\"error\": \"IP lookup failed\"}");
         }
     }
 }
