@@ -14,7 +14,11 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // all endpoints
-                        .allowedOrigins("http://localhost:5173") // your React app
+                        .allowedOrigins(
+                            "http://localhost:5173",
+                            "https://forma-multiutility-hub.vercel.app",
+                            "https://forma-multiutility-92cstctx5-jayant-samals-projects.vercel.app"
+                        ) // your React app
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
