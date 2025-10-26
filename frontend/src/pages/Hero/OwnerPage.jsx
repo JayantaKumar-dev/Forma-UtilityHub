@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Github, Youtube, Mail, Globe } from "lucide-react";
-import IconCloudDemo from "src/components/Globe";
+import IconCloudDemo from "@/components/globe";
 import HeroImg from "@/assets/images/mypic.JPG"; // ✅ your profile image
 
 export default function OwnerPage() {
