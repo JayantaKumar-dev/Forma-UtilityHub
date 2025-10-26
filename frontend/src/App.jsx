@@ -9,7 +9,7 @@ import ServicesGrid, { allServices } from "./components/ServicesGrid";
 import WhyChooseSection from "./components/WhyChooseSection";
 import CallToActionSection from "./components/CallToActionSection";
 import BuiltBySection from "./components/BuiltBySection";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 
 // ✅ Pages
 import UrlShortenerPage from "./pages/utilities/UrlShortenerPage";
