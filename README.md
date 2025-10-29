@@ -4,8 +4,6 @@
 A modern web application that combines 30+ developer, productivity, and daily-life tools into one seamless experience — beautifully designed, fast, and fully responsive.
 
 🌐 **Live Demo:** [Forma Multiutility Hub](https://forma-multiutility-hub.vercel.app/)  
-🖥️ **Backend API:** [Render Backend](https://forma-utilityhub.onrender.com)
-
 ---
 
 ## 🟣 Overview
