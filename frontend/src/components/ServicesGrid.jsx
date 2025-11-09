@@ -6,7 +6,7 @@ import {
   Link2, FileJson, Calculator, Shield, QrCode, KeyRound, Shuffle,
   FileCode2, FileSpreadsheet, Binary, Droplet, Code, FileText,
   Clock, Weight, Lock, Maximize2, TimerReset, CloudSun, MapPin,
-  Image, Repeat
+  Image, Repeat, Keyboard 
 } from "lucide-react";
 
 export const allServices = [
@@ -43,6 +43,7 @@ export const allServices = [
   { title: "Aspect Ratio Calculator", icon: <Maximize2 />, path: "/aspect-ratio", category: "design" },
   { title: "Encrypt / Decrypt Text (AES-256)", icon: <Lock />, path: "/aes-encryptor", category: "security" },
   { title: "Countdown Timer", icon: <TimerReset />, path: "/countdown-timer", category: "utilities" },
+  { title: "Virtual Piano", icon: <Keyboard />, path: "/virtual-piano", category: "music" },
 ];
 
 export default function ServicesGrid({ filteredServices, loading }) {

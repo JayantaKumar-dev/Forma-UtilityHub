@@ -45,6 +45,7 @@ import IpLocationFinder from "./pages/utilities/IpLocationFinder";
 import ImageEnhancer from "./pages/design/ImageEnhancer";
 import ImageCompressor from "./pages/design/ImageCompressor";
 import ImageConverter from "./pages/design/ImageConverter";
+import PianoToolPage from "./pages/music/PianoToolPage";
 
 // Info Pages
 import AboutPage from "./pages/Hero/AboutPage";
@@ -171,6 +172,7 @@ export default function App() {
         <Route path="image-enhancer" element={<ImageEnhancer />} />
         <Route path="image-compressor" element={<ImageCompressor />} />
         <Route path="image-converter" element={<ImageConverter />} />
+        <Route path="virtual-piano" element={<PianoToolPage />} />
 
         {/* Info Pages */}
         <Route path="about" element={<AboutPage />} />
